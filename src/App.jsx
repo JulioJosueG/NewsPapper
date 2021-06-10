@@ -17,14 +17,60 @@ const options = [
 ];
    //
 const optionsb = [
-  { value: "ae", label: "" },
+  { value: "ae", label: "UAE" },
   { value: "ar", label: "Argentina" },
-  { value: "at", label: "" },
-  { value: "au", label: "" },
-  { value: "be", label: "" },
-  { value: "bg", label: "" },
-  { value: "br", label: "" },
-  { value: "br", label: "" },
+  { value: "at", label: "Austria" },
+  { value: "au", label: "Australia" },
+  { value: "be", label: "Belgica" },
+  { value: "bg", label: "Bulgaria" },
+  { value: "br", label: "Brazil" },
+  { value: "ca", label: "Canada" },
+  { value: "ch", label: "Suiza" },
+  { value: "cn", label: "China" },
+  { value: "co", label: "Colombia" },
+  { value: "cu", label: "Cuba" },
+  { value: "cz", label: "Republica Checa" },
+  { value: "de", label: "Alemania" },
+  { value: "eg", label: "Egipto" },
+  { value: "fr", label: "Francia" },
+  { value: "gb", label: "Reino Unido" },
+  { value: "gr", label: "Grecia" },
+  { value: "hk", label: "Hong Kong" },
+  { value: "hu", label: "Hungria" },
+  { value: "id", label: "Indonesia" },
+  { value: "ie", label: "Irlanda" },
+  { value: "il", label: "Israel" },
+  { value: "in", label: "India" },
+  { value: "it", label: "Italia" },
+  { value: "jp", label: "Japon" },
+  { value: "kr", label: "Sur Korea" },
+  { value: "lt", label: "Lituania" },
+  { value: "lv", label: "Latvia" },
+  { value: "ma", label: "Marruecos" },
+  { value: "mx", label: "Mexico" },
+  { value: "my", label: "Malasia" },
+  { value: "ng", label: "Nigeria" },
+  { value: "nl", label: "Holanda" },
+  { value: "no", label: "Nueruega" },
+  { value: "nz", label: "Nueva Zelanda" },
+  { value: "ph", label: "Philipinas" },
+  { value: "pl", label: "Polonia" },
+  { value: "pt", label: "Portugal" },
+  { value: "ro", label: "Rumania" },
+  { value: "rs", label: "Serbia" },
+  { value: "ru", label: "Rusia" },
+  { value: "sa", label: "Arabia Saudita" },
+  { value: "se", label: "Sueciia" },
+  { value: "sg", label: "Singapur" },
+  { value: "si", label: "Slovenia" },
+  { value: "sk", label: "Slovakia" },
+  { value: "th", label: "Tailandia" },
+  { value: "tr", label: "Turkia" },
+  { value: "tw", label: "Taiwan" },
+  { value: "ua", label: "Ukrania" },
+  { value: "us", label: "Estados Unidos" },
+  { value: "ve", label: "Venezuela" },
+  { value: "za", label: "Sudafrica" },
 ];
 
 
@@ -87,7 +133,12 @@ class App extends Component {
    for(var i = 0; i < options.length; i++) {
      if (options[i].value== value) {
          apiURL = "https://newsapi.org/v2/top-headlines?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&category=" + value
+          break
+     }
+      else if (optionsb[i].value== value) {
+         apiURL = "https://newsapi.org/v2/top-headlines?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&Country=" + value
           break;
+      
      }
      else if (value != null ) {
       apiURL =
@@ -166,10 +217,19 @@ class App extends Component {
               />
             </div>
 
-            <div className="col-sm-3 mt-3 filtro">
+            <div className="col-sm-3 mt-3 filtro form-group">
               <p>Filtro por Categoria </p>
               <select name="categories" onChange={this.handleChange}>
                 {options.map((elemento) => (
+                  <option key={elemento.value} value={elemento.value}>
+                    {elemento.label}
+                  </option>
+                ))}
+              </select>
+
+              <p>Filtro por Pais </p>
+              <select name="countries" onChange={this.handleChange}>
+                {optionsb.map((elemento) => (
                   <option key={elemento.value} value={elemento.value}>
                     {elemento.label}
                   </option>
