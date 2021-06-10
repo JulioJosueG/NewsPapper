@@ -15,7 +15,7 @@ const options = [
   { value: "sports", label: "Sports" },
   { value: "technology", label: "Technology" },
 ];
-   //
+
 const optionsb = [
   { value: "ae", label: "UAE" },
   { value: "ar", label: "Argentina" },
@@ -73,8 +73,11 @@ const optionsb = [
   { value: "za", label: "Sudafrica" },
 ];
 
-
-
+const optionsSor = [
+  { value: "publishedAt", label: "Fecha de Publicacion" },
+  { value: "relevancy", label: "Relevancia" },
+  { value: "popularity", label: "Pupularidad" }
+];
 
 class App extends Component {
   // Estado
@@ -127,26 +130,33 @@ class App extends Component {
   // GET
   search = (value) => {
     let apiURL =
-      "https://newsapi.org/v2/top-headlines?country=be&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100";
-   
+      "https://newsapi.org/v2/top-headlines?country=us&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100";
 
-   for(var i = 0; i < options.length; i++) {
-     if (options[i].value== value) {
-         apiURL = "https://newsapi.org/v2/top-headlines?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&category=" + value
-          break
-     }
-      else if (optionsb[i].value== value) {
-         apiURL = "https://newsapi.org/v2/top-headlines?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&Country=" + value
-          break;
-      
-     }
-     else if (value != null ) {
-      apiURL =
-        "https://newsapi.org/v2/top-headlines?country=be&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&q=" +
-        value;
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].value == value) {
+        apiURL =
+          "https://newsapi.org/v2/top-headlines?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&category=" +
+          value;
+        break;
+      }
+     // Bug
+     /* else if (optionsSor[i].value == value) {
+        apiURL =
+          "https://newsapi.org/v2/everything?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&sortBy=" +
+          value;
+        break;
+    } */
+        else if (optionsb[i].value == value) {
+        apiURL =
+          "https://newsapi.org/v2/top-headlines?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&Country=" +
+          value;
+        break;
+      } else if (value != null) {
+        apiURL =
+          "https://newsapi.org/v2/top-headlines?country=be&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&q=" +
+          value;
+      }
     }
-    }   
-    
     axios
       .get(apiURL)
       .then((res) => {
@@ -158,15 +168,13 @@ class App extends Component {
           ),
           isLoading: false,
           api: apiURL,
-        })
-        if(options.includes(value)){
-          this.setState(
-            {
-              searching: value != null,
-              searchText: value
-            }
-          )
-        };
+        });
+        if (options.includes(value)) {
+          this.setState({
+            searching: value != null,
+            searchText: value,
+          });
+        }
       })
       .catch((err) => {
         this.setState({
@@ -217,9 +225,16 @@ class App extends Component {
               />
             </div>
 
-            <div className="col-sm-3 mt-3 filtro form-group">
+            <div className="col-sm-3 mt-3 filtro ">
               <p>Filtro por Categoria </p>
-              <select name="categories" onChange={this.handleChange}>
+              <select
+                placeholder="Selecione"
+                name="categories"
+                onChange={this.handleChange}
+              >
+                <option value="" disabled selected>
+                  Selecciona la Categoria
+                </option>
                 {options.map((elemento) => (
                   <option key={elemento.value} value={elemento.value}>
                     {elemento.label}
@@ -227,9 +242,29 @@ class App extends Component {
                 ))}
               </select>
 
-              <p>Filtro por Pais </p>
-              <select name="countries" onChange={this.handleChange}>
+              <p className="mt-3">Filtro por Pais </p>
+              <select
+                placeholder="Selecione"
+                name="countries"
+                onChange={this.handleChange}
+              >
+                <option value="" disabled selected>
+                  Selecciona el Pais
+                </option>
                 {optionsb.map((elemento) => (
+                  <option key={elemento.value} value={elemento.value}>
+                    {elemento.label}
+                  </option>
+                ))}
+              </select>
+
+              <p className="mt-3">Organizar Por </p>
+              <select
+                placeholder="Selecione"
+                name="sortBy"
+                onChange={this.handleChange}
+              >
+                {optionsSor.map((elemento) => (
                   <option key={elemento.value} value={elemento.value}>
                     {elemento.label}
                   </option>
