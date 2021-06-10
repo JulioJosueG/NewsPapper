@@ -1,7 +1,6 @@
 import "./App.css";
 import NewsList from "./components/NewsList";
 import SearchBox from "./components/SearchBox";
-import Select from "react-select";
 import React, { Component, Fragment } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
@@ -76,7 +75,7 @@ const optionsb = [
 const optionsSor = [
   { value: "publishedAt", label: "Fecha de Publicacion" },
   { value: "relevancy", label: "Relevancia" },
-  { value: "popularity", label: "Pupularidad" }
+  { value: "popularity", label: "Pupularidad" },
 ];
 
 class App extends Component {
@@ -132,29 +131,33 @@ class App extends Component {
     let apiURL =
       "https://newsapi.org/v2/top-headlines?country=us&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100";
 
-    for (var i = 0; i < options.length; i++) {
-      if (options[i].value == value) {
-        apiURL =
-          "https://newsapi.org/v2/top-headlines?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&category=" +
-          value;
-        break;
-      }
-     // Bug
-     /* else if (optionsSor[i].value == value) {
-        apiURL =
-          "https://newsapi.org/v2/everything?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&sortBy=" +
-          value;
-        break;
-    } */
+    if (this.state.api != null) {
+      apiURL = this.state.api;
+    } else {
+      for (var i = 0; i < options.length; i++) {
+        if (options[i].value == value) {
+          apiURL =
+            "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Category=" +
+            value;
+          break;
+        }
+      /*  
+        else if (optionsSor[i].value == value) {
+          apiURL =
+            "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&sortBy=" +
+            value;
+          break;
+      } */
         else if (optionsb[i].value == value) {
-        apiURL =
-          "https://newsapi.org/v2/top-headlines?apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&Country=" +
-          value;
-        break;
-      } else if (value != null) {
-        apiURL =
-          "https://newsapi.org/v2/top-headlines?country=be&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100&q=" +
-          value;
+          apiURL =
+            "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Country=" +
+            value;
+          break;
+        } else if (value != null) {
+          apiURL =
+            "https://newsapi.org/v2/top-headlines?country=be&apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
+            value;
+        }
       }
     }
     axios
@@ -187,7 +190,6 @@ class App extends Component {
 
   //Renderizado
   render() {
-    const { selectedOption } = this.state;
     return (
       <div className="App container">
         <header>
