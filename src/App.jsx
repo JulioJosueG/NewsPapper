@@ -93,11 +93,28 @@ class App extends Component {
     currentPage: 0,
   };
 
-  handleChange = (selectedOption) => {
+  HandleBusqueda = (selectedOption) => {
+    this.setState({ selectedOption: selectedOption});
+    console.log(selectedOption);
+    this.search(selectedOption,null,null,null);
+  };
+
+  handleCountry = (selectedOption) => {
     this.setState({ selectedOption: selectedOption.target.value });
     console.log(selectedOption.target.value);
-    this.search(selectedOption.target.value);
+    this.search(null,selectedOption.target.value,null,null);
   };
+  handleCategory = (selectedOption) => {
+    this.setState({ selectedOption: selectedOption.target.value });
+    console.log(selectedOption.target.value);
+    this.search(null,null,selectedOption.target.value,null);
+  };
+  handleSortBy = (selectedOption) => {
+    this.setState({ selectedOption: selectedOption.target.value });
+    console.log(selectedOption.target.value);
+    this.search(null,null,null,selectedOption.target.value);
+  };
+
 
   componentDidMount() {
     this.search(null);
@@ -105,7 +122,7 @@ class App extends Component {
 
   //Handles
   handleSearchBox = (value) => {
-    this.search(value);
+    this.search(value,null,null,null);
   };
 
   handleSearchBoxClear = () => {
@@ -127,39 +144,34 @@ class App extends Component {
   };
 
   // GET
-  search = (value) => {
+  search = (q,country,category,sortBy) => {
     let apiURL =
       "https://newsapi.org/v2/top-headlines?country=us&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100";
 
     if (this.state.api != null) {
       apiURL = this.state.api;
-    } else {
-      for (var i = 0; i < options.length; i++) {
-        if (options[i].value == value) {
+    }
+    if (category != null) {
           apiURL =
             "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Category=" +
-            value;
-          break;
+            category;
         }
-      /*  
-        else if (optionsSor[i].value == value) {
-          apiURL =
-            "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&sortBy=" +
-            value;
-          break;
-      } */
-        else if (optionsb[i].value == value) {
+   if (sortBy != null) {
+    apiURL =
+    "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q="+this.state.SearchBox+"&sortBy=" +
+    sortBy;
+    } 
+     if (country !=null) {
           apiURL =
             "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Country=" +
-            value;
-          break;
-        } else if (value != null) {
+            country;
+        } 
+        
+    if (q != null) {
           apiURL =
-            "https://newsapi.org/v2/top-headlines?country=be&apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
-            value;
+          "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
+            q;
         }
-      }
-    }
     axios
       .get(apiURL)
       .then((res) => {
@@ -171,13 +183,10 @@ class App extends Component {
           ),
           isLoading: false,
           api: apiURL,
+          searching: q != null,
+            searchText: q,
         });
-        if (options.includes(value)) {
-          this.setState({
-            searching: value != null,
-            searchText: value,
-          });
-        }
+       
       })
       .catch((err) => {
         this.setState({
@@ -199,7 +208,7 @@ class App extends Component {
           <SearchBox
             value={this.state.searchText}
             onClear={this.handleSearchBoxClear}
-            onSearch={this.handleSearchBox}
+            onSearch={this.HandleBusqueda}
             searching={this.state.searching}
           />
           {this.state.errorMessage ? (
@@ -232,7 +241,7 @@ class App extends Component {
               <select
                 placeholder="Selecione"
                 name="categories"
-                onChange={this.handleChange}
+                onChange={this.handleCategory}
               >
                 <option value="" disabled selected>
                   Selecciona la Categoria
@@ -248,7 +257,7 @@ class App extends Component {
               <select
                 placeholder="Selecione"
                 name="countries"
-                onChange={this.handleChange}
+                onChange={this.handleCountry}
               >
                 <option value="" disabled selected>
                   Selecciona el Pais
@@ -264,7 +273,7 @@ class App extends Component {
               <select
                 placeholder="Selecione"
                 name="sortBy"
-                onChange={this.handleChange}
+                onChange={this.handleSortBy}
               >
                 {optionsSor.map((elemento) => (
                   <option key={elemento.value} value={elemento.value}>
