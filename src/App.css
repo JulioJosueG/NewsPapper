@@ -8,6 +8,11 @@ header{
   background: #555;
 }
 
+.card-title{
+font-weight: bold;
+
+
+}
 .header h1 {
   position: relative;
   top: 18px;

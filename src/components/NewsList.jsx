@@ -17,7 +17,7 @@ export default function NewsList(props) {
                   alt={item.title}
                 />
                 <div className="card-body">
-                  <h6 className="card-title">{item.title}</h6>
+                  <h6  className="card-title">{item.title}</h6>
                   <p className="card-text">{item.content}</p>
                   <p className="card-text">By: {item.author != null ? item.author: item.source.name}</p>
                   <div class="card-footer text-muted">
