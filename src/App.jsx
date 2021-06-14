@@ -4,6 +4,8 @@ import SearchBox from "./components/SearchBox";
 import React, { Component, Fragment } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import TopBar from "./components/topBar";
+import Footer from "./pages/Footer"
 
 const options = [
   { value: "business", label: "Business" },
@@ -94,27 +96,26 @@ class App extends Component {
   };
 
   HandleBusqueda = (selectedOption) => {
-    this.setState({ selectedOption: selectedOption});
+    this.setState({ selectedOption: selectedOption });
     console.log(selectedOption);
-    this.search(selectedOption,null,null,null);
+    this.search(selectedOption, null, null, null);
   };
 
   handleCountry = (selectedOption) => {
     this.setState({ selectedOption: selectedOption.target.value });
     console.log(selectedOption.target.value);
-    this.search(null,selectedOption.target.value,null,null);
+    this.search(null, selectedOption.target.value, null, null);
   };
   handleCategory = (selectedOption) => {
-    this.setState({ selectedOption: selectedOption.target.value });
-    console.log(selectedOption.target.value);
-    this.search(null,null,selectedOption.target.value,null);
+    this.setState({ selectedOption: selectedOption.target.id });
+    console.log(selectedOption.target.id);
+    this.search(null, null, selectedOption.target.id, null);
   };
   handleSortBy = (selectedOption) => {
     this.setState({ selectedOption: selectedOption.target.value });
     console.log(selectedOption.target.value);
-    this.search(null,null,null,selectedOption.target.value);
+    this.search(null, null, null, selectedOption.target.value);
   };
-
 
   componentDidMount() {
     this.search(null);
@@ -122,7 +123,7 @@ class App extends Component {
 
   //Handles
   handleSearchBox = (value) => {
-    this.search(value,null,null,null);
+    this.search(value, null, null, null);
   };
 
   handleSearchBoxClear = () => {
@@ -144,7 +145,7 @@ class App extends Component {
   };
 
   // GET
-  search = (q,country,category,sortBy) => {
+  search = (q, country, category, sortBy) => {
     let apiURL =
       "https://newsapi.org/v2/top-headlines?country=us&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100";
 
@@ -152,26 +153,28 @@ class App extends Component {
       apiURL = this.state.api;
     }
     if (category != null) {
-          apiURL =
-            "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Category=" +
-            category;
-        }
-   if (sortBy != null) {
-    apiURL =
-    "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q="+this.state.SearchBox+"&sortBy=" +
-    sortBy;
-    } 
-     if (country !=null) {
-          apiURL =
-            "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Country=" +
-            country;
-        } 
-        
+      apiURL =
+        "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Category=" +
+        category;
+    }
+    if (sortBy != null) {
+      apiURL =
+        "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
+        this.state.SearchBox +
+        "&sortBy=" +
+        sortBy;
+    }
+    if (country != null) {
+      apiURL =
+        "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Country=" +
+        country;
+    }
+
     if (q != null) {
-          apiURL =
-          "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
-            q;
-        }
+      apiURL =
+        "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
+        q;
+    }
     axios
       .get(apiURL)
       .then((res) => {
@@ -184,9 +187,8 @@ class App extends Component {
           isLoading: false,
           api: apiURL,
           searching: q != null,
-            searchText: q,
+          searchText: q,
         });
-       
       })
       .catch((err) => {
         this.setState({
@@ -200,90 +202,135 @@ class App extends Component {
   //Renderizado
   render() {
     return (
-      <div className="App container">
-        <header>
-          <h1>Newspaper React</h1>
-        </header>
-        <body>
-          <SearchBox
-            value={this.state.searchText}
-            onClear={this.handleSearchBoxClear}
-            onSearch={this.HandleBusqueda}
-            searching={this.state.searching}
-          />
-          {this.state.errorMessage ? (
-            <div className="alert alert-danger">{this.state.errorMessage}</div>
-          ) : null}
+      <div>
+        <TopBar/>
+        <div className="App container" >
+          <header>
+            
+            <h1>Newspaper React</h1>
+          </header>
+          <body>
+            <SearchBox
+              value={this.state.searchText}
+              onClear={this.handleSearchBoxClear}
+              onSearch={this.HandleBusqueda}
+              searching={this.state.searching}
+            />
+            {this.state.errorMessage ? (
+              <div className="alert alert-danger">
+                {this.state.errorMessage}
+              </div>
+            ) : null}
 
-          <div className="row">
-            <div className="col-sm-9">
-              <NewsList
-                isLoading={this.state.isLoading}
-                articles={this.state.articles}
-              />
-              <ReactPaginate
-                previousLabel={"prev"}
-                nextLabel={"next"}
-                breakLabel={"..."}
-                breakClassName={"break-me"}
-                pageCount={this.state.pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={this.handlePageClick}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
-              />
+            <div className="nav-bar">
+              <div className="container">
+                <nav className="navbar navbar-expand-md bg-dark navbar-dark">
+                  <a href="#" className="navbar-brand">
+                    MENU
+                  </a>
+                  <button
+                    type="button"
+                    className="navbar-toggler"
+                    data-toggle="collapse"
+                    data-target="#navbarCollapse"
+                  >
+                    <span className="navbar-toggler-icon"></span>
+                  </button>
+
+                  <div
+                    className="collapse navbar-collapse justify-content-between"
+                    id="navbarCollapse"
+                  >
+                    <div className="navbar-nav mr-auto">
+                      <a href="index.html" className="nav-item nav-link active">
+                        Home
+                      </a>
+                      
+                      <li  id="business" onClick={this.handleCategory} className="nav-item nav-link">Business</li>
+                      <li  id="entertainment" onClick={this.handleCategory} className="nav-item nav-link">Entertainment</li>
+
+                      <li id="general" onClick={this.handleCategory} className="nav-item nav-link">General</li>
+                      <li id="health" onClick={this.handleCategory} className="nav-item nav-link">Health</li>
+                      <li id="science" onClick={this.handleCategory} className="nav-item nav-link">Science</li>
+                      <li id="sports" onClick={this.handleCategory} className="nav-item nav-link">Sports</li>
+                      <li id="technology" onClick={this.handleCategory} className="nav-item nav-link">Technology</li>
+                      
+                    </div>
+                    
+                    <div className="social ml-auto">
+                      <a href="https://twitter.com/JJ_0020">
+                        <i className="fab fa-twitter"></i>
+                      </a>
+                      <a href="https://www.youtube.com/channel/UCgoaq4GhCiLjX9FLfx60kWQ">
+                        <i className="fab fa-youtube"></i>
+                      </a>
+                      <a href="https://github.com/JulioJosueG/NewsPapper">
+                        <i className="fab fa-git"></i>
+                      </a>
+
+                      
+                    </div>
+                  </div>
+                </nav>
+              </div>
             </div>
+            <div className="row">
+              <div className="col-sm-9">
+                <NewsList
+                  isLoading={this.state.isLoading}
+                  articles={this.state.articles}
+                />
+                <ReactPaginate
+                  previousLabel={"prev"}
+                  nextLabel={"next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={this.state.pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.handlePageClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                />
+              </div>
 
-            <div className="col-sm-3 mt-3 filtro ">
-              <p>Filtro por Categoria </p>
-              <select
-                placeholder="Selecione"
-                name="categories"
-                onChange={this.handleCategory}
-              >
-                <option value="" disabled selected>
-                  Selecciona la Categoria
-                </option>
-                {options.map((elemento) => (
-                  <option key={elemento.value} value={elemento.value}>
-                    {elemento.label}
-                  </option>
-                ))}
-              </select>
+              <div className="col-sm-3 mt-3 filtro ">
+               
 
-              <p className="mt-3">Filtro por Pais </p>
-              <select
-                placeholder="Selecione"
-                name="countries"
-                onChange={this.handleCountry}
-              >
-                <option value="" disabled selected>
-                  Selecciona el Pais
-                </option>
-                {optionsb.map((elemento) => (
-                  <option key={elemento.value} value={elemento.value}>
-                    {elemento.label}
+                <p className="mt-3">Filtro por Pais </p>
+                <select
+                  placeholder="Selecione"
+                  name="countries"
+                  onChange={this.handleCountry}
+                >
+                  <option value="" disabled selected>
+                    Selecciona el Pais
                   </option>
-                ))}
-              </select>
+                  {optionsb.map((elemento) => (
+                    <option key={elemento.value} value={elemento.value}>
+                      {elemento.label}
+                    </option>
+                  ))}
+                </select>
 
-              <p className="mt-3">Organizar Por </p>
-              <select
-                placeholder="Selecione"
-                name="sortBy"
-                onChange={this.handleSortBy}
-              >
-                {optionsSor.map((elemento) => (
-                  <option key={elemento.value} value={elemento.value}>
-                    {elemento.label}
-                  </option>
-                ))}
-              </select>
+                <p className="mt-3">Organizar Por </p>
+                <select
+                  placeholder="Selecione"
+                  name="sortBy"
+                  onChange={this.handleSortBy}
+                >
+                  {optionsSor.map((elemento) => (
+                    <option key={elemento.value} value={elemento.value}>
+                      {elemento.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-          </div>
-        </body>
+          </body>
+        </div>
+        <Footer/>
       </div>
     );
   }
