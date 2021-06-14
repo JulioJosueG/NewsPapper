@@ -125,13 +125,13 @@ button.btn:hover {
 /**********************************/
 .top-bar {
     padding: 2px 0;
-    background: #000000;
+    background: #928280;
 }
 
 .top-bar .tb-contact p {
     display: inline-block;
     margin: 0;
-    color: #FF6F61;
+    color: #2b1c19;
     font-size: 14px;
 }
 
@@ -149,7 +149,7 @@ button.btn:hover {
 }
 
 .top-bar .tb-menu a {
-    color: #FF6F61;
+    color: #2c1e1d;
     font-size: 14px;
     margin: 0 8px;
 }
@@ -166,7 +166,7 @@ button.btn:hover {
     position: absolute;
     content: "/";
     margin: 1px 0 0 6px;
-    color: #FF6F61;
+    color: #000000;
     font-size: 14px;
 }
 

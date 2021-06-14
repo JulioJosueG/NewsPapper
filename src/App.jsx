@@ -205,9 +205,10 @@ class App extends Component {
       <div>
         <TopBar/>
         <div className="App container" >
-          <header>
-            
-            <h1>Newspaper React</h1>
+          <header >
+          <h1>
+            <img src="/newsIcon.png" width="80px" height="40px"/>
+            TimesNow </h1>
           </header>
           <body>
             <SearchBox
@@ -287,7 +288,7 @@ class App extends Component {
                   breakClassName={"break-me"}
                   pageCount={this.state.pageCount}
                   marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
+                  pageRangeDisplayed={20}
                   onPageChange={this.handlePageClick}
                   containerClassName={"pagination"}
                   subContainerClassName={"pages pagination"}
