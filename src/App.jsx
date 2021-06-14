@@ -5,7 +5,7 @@ import React, { Component, Fragment } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import TopBar from "./components/topBar";
-import Footer from "./pages/Footer"
+import Footer from "./components/Footer";
 
 const options = [
   { value: "business", label: "Business" },
@@ -160,7 +160,7 @@ class App extends Component {
     if (sortBy != null) {
       apiURL =
         "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
-        this.state.SearchBox +
+        this.state.searchText +
         "&sortBy=" +
         sortBy;
     }
@@ -203,12 +203,13 @@ class App extends Component {
   render() {
     return (
       <div>
-        <TopBar/>
-        <div className="App container" >
-          <header >
-          <h1>
-            <img src="/newsIcon.png" width="80px" height="40px"/>
-            TimesNow </h1>
+        <TopBar />
+        <div className="App container">
+          <header>
+            <h1>
+              <img src="/newsIcon.png" width="80px" height="40px" />
+              TimesNow{" "}
+            </h1>
           </header>
           <body>
             <SearchBox
@@ -246,18 +247,59 @@ class App extends Component {
                       <a href="index.html" className="nav-item nav-link active">
                         Home
                       </a>
-                      
-                      <li  id="business" onClick={this.handleCategory} className="nav-item nav-link">Business</li>
-                      <li  id="entertainment" onClick={this.handleCategory} className="nav-item nav-link">Entertainment</li>
 
-                      <li id="general" onClick={this.handleCategory} className="nav-item nav-link">General</li>
-                      <li id="health" onClick={this.handleCategory} className="nav-item nav-link">Health</li>
-                      <li id="science" onClick={this.handleCategory} className="nav-item nav-link">Science</li>
-                      <li id="sports" onClick={this.handleCategory} className="nav-item nav-link">Sports</li>
-                      <li id="technology" onClick={this.handleCategory} className="nav-item nav-link">Technology</li>
-                      
+                      <li
+                        id="business"
+                        onClick={this.handleCategory}
+                        className="nav-item nav-link"
+                      >
+                        Business
+                      </li>
+                      <li
+                        id="entertainment"
+                        onClick={this.handleCategory}
+                        className="nav-item nav-link"
+                      >
+                        Entertainment
+                      </li>
+
+                      <li
+                        id="general"
+                        onClick={this.handleCategory}
+                        className="nav-item nav-link"
+                      >
+                        General
+                      </li>
+                      <li
+                        id="health"
+                        onClick={this.handleCategory}
+                        className="nav-item nav-link"
+                      >
+                        Health
+                      </li>
+                      <li
+                        id="science"
+                        onClick={this.handleCategory}
+                        className="nav-item nav-link"
+                      >
+                        Science
+                      </li>
+                      <li
+                        id="sports"
+                        onClick={this.handleCategory}
+                        className="nav-item nav-link"
+                      >
+                        Sports
+                      </li>
+                      <li
+                        id="technology"
+                        onClick={this.handleCategory}
+                        className="nav-item nav-link"
+                      >
+                        Technology
+                      </li>
                     </div>
-                    
+
                     <div className="social ml-auto">
                       <a href="https://twitter.com/JJ_0020">
                         <i className="fab fa-twitter"></i>
@@ -268,8 +310,6 @@ class App extends Component {
                       <a href="https://github.com/JulioJosueG/NewsPapper">
                         <i className="fab fa-git"></i>
                       </a>
-
-                      
                     </div>
                   </div>
                 </nav>
@@ -297,8 +337,6 @@ class App extends Component {
               </div>
 
               <div className="col-sm-3 mt-3 filtro ">
-               
-
                 <p className="mt-3">Filtro por Pais </p>
                 <select
                   placeholder="Selecione"
@@ -331,7 +369,7 @@ class App extends Component {
             </div>
           </body>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     );
   }
