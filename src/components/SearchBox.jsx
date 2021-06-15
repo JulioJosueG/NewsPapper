@@ -22,10 +22,10 @@ export default class SearchBox extends Component {
                         <input name='search' type="text" className='form-control' placeholder='Buscar Noticias...'/>}
                         
                     </div>
-                    <div className='d-grid gasp-2 ms-3' style={{width:'120px'}} >
+                    <div className='d-grid gasp-2 ms-3 ' style={{width:'120px'}} >
                     {
                         this.props.searching ? <button className='btn btn-dark d-block' onClick={this.props.onClear}>Borrar</button> :
-                        <button className='btn btn-primary d-block' type="submit">Buscar</button>
+                        <button className='btn btn-primary d-block mb-3' type="submit">Buscar</button>
                     }
 
 

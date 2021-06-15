@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import dateFormat from 'dateformat';
 
 export default function NewsList(props) {
   return (
@@ -16,11 +17,11 @@ export default function NewsList(props) {
                   alt={item.title}
                 />
                 <div className="card-body">
-                  <h6 className="card-title">{item.title}</h6>
+                  <h6  className="card-title">{item.title}</h6>
                   <p className="card-text">{item.content}</p>
                   <p className="card-text">By: {item.author != null ? item.author: item.source.name}</p>
                   <div class="card-footer text-muted">
-                  <p>{item.publishedAt}</p>
+                  <p>{dateFormat( item.publishedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}</p>
                   </div>
                   
 

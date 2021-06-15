@@ -1,8 +1,25 @@
 header{
     padding: 32px;
-    text-align: center;
+}
+.header img {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background: #555;
 }
 
+.card-title{
+font-weight: bold;
+
+
+}
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
+  float: left;
+
+}
 .loading{
     height: 100vh;
     display: flex;
