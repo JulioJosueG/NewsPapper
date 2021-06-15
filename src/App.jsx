@@ -1,7 +1,7 @@
 import "./App.css";
 import NewsList from "./components/NewsList";
 import SearchBox from "./components/SearchBox";
-import React, { Component, Fragment } from "react";
+import React, { Component  } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import TopBar from "./components/topBar";
@@ -122,9 +122,6 @@ class App extends Component {
   }
 
   //Handles
-  handleSearchBox = (value) => {
-    this.search(value, null, null, null);
-  };
 
   handleSearchBoxClear = () => {
     this.search();
