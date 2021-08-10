@@ -12,16 +12,16 @@ export default function NewsList(props) {
             <div className="col-md-3" key={index}>
               <div className="card mb-3">
                 <img
-                  src={item.urlToImage ?? "/default.jpg"}
+                  src={item.imageAt ?? "/default.jpg"}
                   className="card-img-top"
-                  alt={item.title}
+                  alt={item.Title}
                 />
                 <div className="card-body">
                   <h6  className="card-title">{item.title}</h6>
                   <p className="card-text">{item.content}</p>
-                  <p className="card-text">By: {item.author != null ? item.author: item.source.name}</p>
+                  <p className="card-text">By: {item.idAuthor }</p>
                   <div class="card-footer text-muted">
-                  <p>{dateFormat( item.publishedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}</p>
+                  <p>{dateFormat( item.PublishedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}</p>
                   </div>
                   
 
