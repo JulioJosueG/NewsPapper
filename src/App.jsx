@@ -142,56 +142,29 @@ class App extends Component {
   };
 
   // GET
-  search = (q, country, category, sortBy) => {
+  search = () => {
     let apiURL =
-      "https://newsapi.org/v2/top-headlines?country=us&apiKey=c90db1a67a924568a96493d498eeab6b&pageSize=100";
-
-    if (this.state.api != null) {
-      apiURL = this.state.api;
-    }
-    if (category != null) {
-      apiURL =
-        "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Category=" +
-        category;
-    }
-    if (sortBy != null) {
-      apiURL =
-        "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
-        this.state.searchText +
-        "&sortBy=" +
-        sortBy;
-    }
-    if (country != null) {
-      apiURL =
-        "https://newsapi.org/v2/top-headlines?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&Country=" +
-        country;
-    }
-
-    if (q != null) {
-      apiURL =
-        "https://newsapi.org/v2/everything?apiKey=89fad77ad3e94e68bca56a348a36f672&pageSize=100&q=" +
-        q;
-    }
+      "https://localhost:44381/api/Articles";  
     axios
       .get(apiURL)
       .then((res) => {
+        console.log(res.data);
         this.setState({
-          pageCount: Math.ceil(res.data.articles.length / this.state.perPage),
-          articles: res.data.articles.slice(
+          pageCount: Math.ceil(res.data / this.state.perPage),
+          articles: res.data.slice(
             this.state.offset,
             this.state.offset + this.state.perPage
           ),
+          
           isLoading: false,
-          api: apiURL,
-          searching: q != null,
-          searchText: q,
+          api: apiURL
         });
       })
       .catch((err) => {
         this.setState({
           isLoading: false,
           articles: [],
-          errorMessage: err.response.data.message,
+          errorMessage : "Error"
         });
       });
   };
